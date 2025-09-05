@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import Garage from "./pages/Garage";
+import Winners from "./pages/Winners";
 
-function App() {
-  const [count, setCount] = useState(0)
+// Define a string union type for pages
+type Page = "garage" | "winners";
+
+const App: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState<Page>("garage");
+
+  // Render the correct page based on currentPage
+  const renderPage = () => {
+    if (currentPage === "garage") return <Garage />;
+    if (currentPage === "winners") return <Winners />;
+    return null;
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="App pt-20 bg-gray-900 h-full">
+      <header className="App-header container mx-auto px-6">
+        <div className="mb-4">
+          <button
+            onClick={() => setCurrentPage("garage")}
+            className={`mr-2 ${
+              currentPage === "garage"
+                ? "bg-blue-500"
+                : "bg-gray-300 hover:bg-gray-400"
+            } text-white py-2 px-4 rounded`}
+          >
+            Garage
+          </button>
+          <button
+            onClick={() => setCurrentPage("winners")}
+            className={`mr-2 ${
+              currentPage === "winners"
+                ? "bg-blue-500"
+                : "bg-gray-300 hover:bg-gray-400"
+            } text-white py-2 px-4 rounded`}
+          >
+            Winners
+          </button>
+        </div>
+        {renderPage()}
+      </header>
+    </div>
+  );
+};
 
-export default App
+export default App;
